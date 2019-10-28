@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request
 import time
+import json
 app = Flask(__name__)
 
 @app.route("/")
@@ -18,7 +19,10 @@ def api_info():
 
 @app.route("/api/hi", methods = ['POST'])
 def recieve_hi():
-    data = request.get_json()
+    data = request.get_json(force=True)
+    #j = json.loads(request.data)
+    #data = request.json()
+    #data_ = request.form()
     print(data)
     
     message = {

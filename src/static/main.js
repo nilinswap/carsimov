@@ -9,13 +9,13 @@ $(function() {
     });
 
 
-    var message = JSON.stringify({ "message":"Porsche" });
+    var message = JSON.stringify({ "name":"Porsche" })
 
     console.log(message)
     $.ajax({
       url: '/api/hi',
       type: 'POST',
-      ContentType: 'application/json',
+      ContentType: 'application/json;charset=UTF-8',
       data:  message
     }).done(function(response){
       console.log('success');
