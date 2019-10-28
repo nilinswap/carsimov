@@ -1,39 +1,29 @@
 $(function() {
     $.ajax({
-        url: '/api/info',
+        url: '/api/hi_from_python',
         success: function(data) {
-            console.log('get info');
-            $('#info').html(JSON.stringify(data, null, '   '));
-            $('#description').html(data['description']);
+            $('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
         }
     });
 
 
-    var message = JSON.stringify({ "name":"Porsche" })
+    var message = JSON.stringify({ "name":"Javeh" })
 
     console.log(message)
     $.ajax({
-      url: '/api/hi',
+      url: '/api/hi_from_js',
       type: 'POST',
       ContentType: 'application/json;charset=UTF-8',
       data:  message
     }).done(function(response){
       console.log('success');
+      console.log(response)
+      //data = JSON.parse(response)
+
+      $('#from_js').html( response['message'] + ". (sent by js)" );
+
     }).fail(function(jqXHR, textStatus, errorThrown){
       console.log('FAILED! ERROR: ' + errorThrown);
     });
-    $('#calc').click(function() {
-        $('#info').css('display', "none");
-        $('#description').css('display', "none");
-        console.log("url");
-        $.ajax({
-            url : '/api/calc?a=' + document.getElementById('a').value + '&b=' + document.getElementById('b').value,
-            success: function(data) {
-                $('#add').html(data['a'] + ' + ' + data['b'] + ' = ' + data['add']);
-                $('#subtract').html(data['a'] + ' - ' + data['b'] + ' = ' + data['subtract']);
-                $('#multiply').html(data['a'] + ' * ' + data['b'] + ' = ' + data['multiply']);
-                $('#divide').html(data['a'] + ' / ' + data['b'] + ' = ' + data['divide']);
-            }
-        });
-    });
+
 })

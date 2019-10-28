@@ -1,23 +1,34 @@
-from flask import Flask
-import flask
+from flask import Flask, jsonify, render_template, request
+import time
+import json
+
 app = Flask(__name__)
 
-@app.route("/output")
-def output():
-	return flask.render_template("index.html", name="Joe")
 
-@app.route('/receiver', methods = ['POST'])
-def worker():
-	# read json + reply
-	data = flask.request.get_json()
-	result = ''
+@app.route("/")
+def main():
+	return render_template('index.html', reload=time.time())
+
+
+@app.route("/api/hi_from_python")
+def api_info():
+	info = {
+		"name": "Pyth"
+	}
+	return jsonify(info)
+
+
+@app.route("/api/hi_from_js", methods=['POST'])
+def recieve_hi():
+	data = request.get_json(force=True)
+	message_st = "hi " + data['name'] + ", this is Pyth"
+	print(message_st)
 	
-	print(data)
-	for item in data:
-		# loop over every row
-		result += str(item['make']) + '\n'
+	message = {
+		"message": message_st
+	}
+	return jsonify(message)
 
-	return result
 
 if __name__ == "__main__":
 	app.run()
