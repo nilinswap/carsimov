@@ -1,5 +1,10 @@
 div {
-    height: 500px;
-  width: 500px;
+    height: 575px;
+  width: 575px;
   background-color: powderblue;
+}
+
+#map-canvas{
+    align: centre;
+    padding: 7;
 }
