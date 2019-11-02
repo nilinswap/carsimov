@@ -9,6 +9,10 @@ app = Flask(__name__)
 def main():
 	return render_template('index.html', reload=time.time())
 
+@app.route("/map")
+def map():
+	return render_template('map.html', reload=time.time())
+
 
 @app.route("/api/hi_from_python")
 def api_info():
