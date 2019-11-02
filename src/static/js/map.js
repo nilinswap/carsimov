@@ -22,26 +22,26 @@ var Block = makeStruct("lt rb");
 var Cord = makeStruct("x y");
 
 
-//Block1
-var lt = Cord(4,1);
-var rb = Cord(5,5);
+//Block1: rectangle
+var lt = new Cord(4,1);
+var rb = new Cord(5,5);
 var block1 = new Block(lt, rb);
 //
-//Block2
-var lt = Cord(1,1);
-var rb = Cord(2,2);
-var block1 = new Block(lt, rb);
+//Block2: twin square 1
+var lt = new Cord(1,1);
+var rb = new Cord(2,2);
+var block2 = new Block(lt, rb);
 //
-//Block3
-var lt = Cord(1,4);
-var rb = Cord(2,5);
-var block1 = new Block(lt, rb);
+//Block3: twin square 2
+var lt = new Cord(1,4);
+var rb = new Cord(2,5);
+var block3 = new Block(lt, rb);
 
 //map is a list of blocks and everything between blocks are roads
-var map =
+var map = [block1, block2, block3];
 
-const width = 35;
-const length = 35;
+const width = 7;
+const length = 7;
 
 
 const canvas = document.getElementById("map-canvas");
@@ -70,7 +70,20 @@ const drawCells = () => {
 		}
 	}
 
-
+    //draw blocks
+	for (block of map){
+        for (let row = block.lt.x; row <= block.rb.x; row++){
+            for (let col = block.lt.y; col <= block.rb.y; col++){
+                ctx.fillStyle = BLOCK_COLOR;
+                ctx.fillRect(
+                    col * (CELL_SIZE + 1) + 1,
+                    row * (CELL_SIZE + 1) + 1,
+                    CELL_SIZE,
+                    CELL_SIZE
+                );
+            }
+        }
+	}
 
 	ctx.stroke();
 };
