@@ -2,7 +2,7 @@
 for all utility functions
 """
 from typing import List, Optional
-
+import random
 
 class Cord:
 	"""
@@ -29,9 +29,10 @@ class Block:
 	def __init__(self, lt: Optional[Cord] = None, rb : Optional[Cord] = None):
 		self.lt = lt
 		self.rb = rb
+	
 		
 
-def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> List:
+def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> List[Block]:
 	"""
 	
 	:param map: List of Blocks(Buildings)
@@ -40,8 +41,24 @@ def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> Lis
 	:param level: level to the depth of map
 	:return: map itself
 	"""
+	if length < 3 or width < 3:
+		print("length and width must be greater than 2")
+		return None
+	
 	if not level:
 		return map
-	if map == []:
 	
-	return []
+	if map == []:
+		
+		#initial cord
+		lt = Cord(1,1)
+		rb = Cord(width-2, length - 2)
+		parent_block = Block(lt, rb)
+		map.append(parent_block)
+		map = get_random_map(map, width, length, level - 1)
+		return map
+	
+	
+	
+	
+	return map
