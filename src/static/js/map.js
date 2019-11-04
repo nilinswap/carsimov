@@ -110,14 +110,15 @@ const drawCells = () => {
 
 	ctx.stroke();
 };
+setTimeout(
+drawCells
+ , 3000);
 
 
 
 
 
 
-
-drawCells();
 
 
 
