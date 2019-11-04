@@ -40,8 +40,21 @@ var block3 = new Block(lt, rb);
 //map is a list of blocks and everything between blocks are roads
 var map = [block1, block2, block3];
 
-const width = 7;
-const length = 7;
+let map_result = null;
+$(function() {
+    $.ajax({
+        url: '/api/random_map',
+        success: function(data) {
+            map_result = JSON.parse(data)
+            console.log(map_result)
+            //$('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
+        }
+    });
+
+})
+
+const width = 20;
+const length = 20;
 
 
 const canvas = document.getElementById("map-canvas");

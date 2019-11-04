@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, request
 import time
 import json
-
+import utils
 
 app = Flask(__name__)
 
@@ -14,6 +14,20 @@ def main():
 def map():
 	return render_template('map.html', reload=time.time())
 
+
+@app.route("/api/random_map")
+def random_map():
+	length = 20
+	width = 20
+	info = {
+		"map": utils.get_random_map(
+			map = [],
+			length = length,
+			width = width,
+			level = 4
+		)
+	}
+	return jsonify(info)
 
 @app.route("/api/hi_from_python")
 def api_info():
