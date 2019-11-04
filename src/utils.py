@@ -32,14 +32,45 @@ class Block:
 		:param rb:
 
 	"""
+	
 	def __init__(self, lt: Optional[Cord] = None, rb : Optional[Cord] = None):
 		self.lt = lt
 		self.rb = rb
+		
 	
 	def __str__(self):
 		return "\n\tlt: %s\n\t\trb: %s\n" % (self.lt, self.rb)
+
+class Map:
+	"""
+	
+	:param block_list:
+	"""
+	current_choice = None
+	def __init__(self, block_list: List[Block] = []):
+		self.block_list = block_list
 		
-def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> List[Block]:
+	
+	def __str__(self):
+		st = 'map: \n'
+		st += "block_list_length: %d"% len(self.block_list)
+		for b in self.block_list:
+			st += str(b)
+			
+		return st
+	
+	def add(self, block):
+		self.block_list.append(block)
+		
+	def is_empty(self):
+		return len(self.block_list) == 0
+	
+	def blind_pick(self):
+		current_choice = random.choice(self.block_list)
+		return current_choice
+	
+	
+def get_random_map(map: Map ,width: int, length: int, level: int) -> Map:
 	"""
 	
 	:param map: List of Blocks(Buildings)
@@ -48,9 +79,7 @@ def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> Lis
 	:param level: level to the depth of map
 	:return: map itself
 	"""
-	print("map")
-	for b in map:
-		print(b)
+	print(map)
 	if length < 3 or width < 3:
 		print("length and width must be greater than 2")
 		return None
@@ -58,20 +87,20 @@ def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> Lis
 	if not level:
 		return map
 	
-	if map == []:
+	if map.is_empty():
 		
 		#initial cord
-		lt = Cord(1,1)
+		lt = Cord(1, 1)
 		rb = Cord(width-2, length - 2)
 		parent_block = Block(lt, rb)
-		map.append(parent_block)
+		map.add(parent_block)
 		map = get_random_map(map = map, width =  width, length= length, level = level - 1)
 		return map
 	
 	s_length = 0
 	s_width = 0
 	for i in range(MaxTries):
-		slaughter_block = random.choice(map)
+		slaughter_block = map.blind_pick()
 		s_length = slaughter_block.rb.x - slaughter_block.lt.x + 1
 		s_width = slaughter_block.rb.y - slaughter_block.lt.y + 1
 		if s_length >= 5 or s_width >= 5:
@@ -85,7 +114,7 @@ def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> Lis
 	print("slaughter_block", slaughter_block)
 	slaughter_block.rb = Cord(cut_point_x, cut_point_y)
 	
-	map.append(child_block)
+	map.add(child_block)
 	
 	map = get_random_map(map = map, length = length, width = width, level= level-1)
 	
@@ -97,14 +126,13 @@ def get_random_map(map: List[Block] ,width: int, length: int, level: int) -> Lis
 
 def test():
 	map = get_random_map(
-		map = [],
+		map = Map(),
 		length = 20,
 		width = 20,
 		level = 4
 		
 	)
-	print(len(map))
-
+	print(map)
 if __name__ == '__main__':
 	test()
 	

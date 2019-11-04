@@ -19,15 +19,16 @@ def map():
 def random_map():
 	length = 20
 	width = 20
-	info = {
-		"map": utils.get_random_map(
-			map = [],
+	map = utils.get_random_map(
+			map = utils.Map(),
 			length = length,
 			width = width,
 			level = 4
 		)
-	}
-	return jsonify(info)
+
+	map_info = json.dumps( map, default= lambda o: o.__dict__, indent=4)
+	
+	return map_info
 
 @app.route("/api/hi_from_python")
 def api_info():

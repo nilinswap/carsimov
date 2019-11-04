@@ -46,12 +46,22 @@ $(function() {
         url: '/api/random_map',
         success: function(data) {
             map_result = JSON.parse(data)
-            console.log(map_result)
+            console.log("map", map )
+            map = []
+            for (b of map_result.block_list){
+                lt = new Cord(b.lt.x, b.lt.y);
+                rb = new Cord(b.rb.x, b.rb.y);
+                block = new Block(lt, rb);
+                map.push(block)
+            }
+            console.log("map 3", map )
             //$('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
         }
     });
 
 })
+
+console.log("map", map)
 
 const width = 20;
 const length = 20;
