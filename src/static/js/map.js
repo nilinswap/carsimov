@@ -1,7 +1,7 @@
 
 
 const CELL_SIZE = 15; // px
-const NULL_COLOR  = "#CCCCCC";
+const NULL_COLOR  = "#FFFFFF";
 const BLOCK_COLOR  = "#0000FF";
 const CAR_COLOR  = "#00CCFF";
 

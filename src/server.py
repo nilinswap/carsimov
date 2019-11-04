@@ -23,7 +23,7 @@ def random_map():
 			map = utils.Map(),
 			length = length,
 			width = width,
-			level = 4
+			level = 10
 		)
 
 	map_info = json.dumps( map, default= lambda o: o.__dict__, indent=4)

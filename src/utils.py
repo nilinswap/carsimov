@@ -109,12 +109,29 @@ def get_random_map(map: Map ,width: int, length: int, level: int) -> Map:
 		return map
 	cut_point_x = slaughter_block.lt.x + random.randint(2, s_length - 2)
 	cut_point_y = slaughter_block.lt.y + random.randint(2, s_width - 2)
-	
-	child_block = Block(Cord(cut_point_x+1, cut_point_y+1), slaughter_block.rb)
 	print("slaughter_block", slaughter_block)
-	slaughter_block.rb = Cord(cut_point_x, cut_point_y)
 	
-	map.add(child_block)
+	child1_block = Block(Cord(cut_point_x+1, cut_point_y+1), slaughter_block.rb)
+	map.add(child1_block)
+	
+	child2_block = Block(
+		Cord(slaughter_block.lt.x, cut_point_y + 1, ),
+		Cord(cut_point_x-1, slaughter_block.rb.y)
+	)
+	map.add(child2_block)
+	
+	child3_block = Block(
+		Cord( cut_point_x + 1,slaughter_block.lt.y),
+		Cord(slaughter_block.rb.x, cut_point_y - 1),
+	)
+	map.add(child3_block)
+	
+	
+	
+	slaughter_block.rb = Cord(cut_point_x - 1, cut_point_y - 1)
+	map.add(child3_block)
+	
+	
 	
 	map = get_random_map(map = map, length = length, width = width, level= level-1)
 	
