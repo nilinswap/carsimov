@@ -22,25 +22,12 @@ var Block = makeStruct("lt rb");
 var Cord = makeStruct("x y");
 
 
-//Block1: rectangle
-var lt = new Cord(4,1);
-var rb = new Cord(5,5);
-var block1 = new Block(lt, rb);
-//
-//Block2: twin square 1
-var lt = new Cord(1,1);
-var rb = new Cord(2,2);
-var block2 = new Block(lt, rb);
-//
-//Block3: twin square 2
-var lt = new Cord(1,4);
-var rb = new Cord(2,5);
-var block3 = new Block(lt, rb);
 
 //map is a list of blocks and everything between blocks are roads
-var map = [block1, block2, block3];
+var map = [];
 
 let map_result = null;
+let car_pos = new Cord(0, 0);
 $(function() {
     $.ajax({
         url: '/api/random_map',
@@ -54,6 +41,7 @@ $(function() {
                 block = new Block(lt, rb);
                 map.push(block)
             }
+            car_pos = new Cord(map_result.car_pos.x, map_result.car_pos.y);;
             console.log("map 3", map )
             //$('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
         }
@@ -107,6 +95,16 @@ const drawCells = () => {
             }
         }
 	}
+
+	//draw car
+	ctx.fillStyle = CAR_COLOR;
+	ctx.fillRect(
+                    col * (CELL_SIZE + 1) + 1,
+                    row * (CELL_SIZE + 1) + 1,
+                    CELL_SIZE,
+                    CELL_SIZE
+                );
+
 
 	ctx.stroke();
 };
