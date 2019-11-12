@@ -28,6 +28,7 @@ var map = [];
 
 let map_result = null;
 let car_pos = new Cord(0, 0);
+let car_pos_prev = new Cord(0, 0);
 $(function() {
     $.ajax({
         url: '/api/random_map',
@@ -51,13 +52,15 @@ $(function() {
 })
 
 let pos_result = null;
-$(function() {
+var getNextPos = function() {
     $.ajax({
         url: '/api/pos',
         success: function(data) {
             pos_result = JSON.parse(data)
             console.log("pos_result", pos_result )
+            car_pos_prev = car_pos;
             car_pos = new Cord(pos_result.x, pos_result.y);
+
             console.log("car_pos", car_pos)
 
 
@@ -66,7 +69,7 @@ $(function() {
         }
     });
 
-})
+}
 
 
 console.log("map", map)
@@ -135,14 +138,41 @@ const drawCar = () => {
                     CELL_SIZE
                 );
 
+    ctx.fillStyle = NULL_COLOR;
+	ctx.fillRect(
+                    car_pos_prev.x * (CELL_SIZE + 1) + 1,
+                    car_pos_prev.y * (CELL_SIZE + 1) + 1,
+                    CELL_SIZE,
+                    CELL_SIZE
+                );
+
 
 	ctx.stroke();
 };
 
+
+
+var count = 0;
+
+const renderLoop = () => {
+  //debugger;
+    getNextPos()
+
+    while (count != 20000000) {
+        count += 1;
+    }
+    drawCar()
+    count = 0;
+
+
+   animationId = requestAnimationFrame(renderLoop);
+};
+
 setTimeout(
 drawCells
- , 1000);
+ , 3000);
 
+renderLoop();
 
 
 
