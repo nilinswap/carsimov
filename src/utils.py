@@ -177,8 +177,9 @@ def get_next_random_pos(board):
 	new_pos = curr_pos
 	random.shuffle(lis_dir)
 	for dir in lis_dir:
-		new_pos = curr_pos + dir
-		if new_pos.car_valid(board):
+		new_pos_ = curr_pos + dir
+		if new_pos_.car_valid(board):
+			new_pos = new_pos_
 			break
 			
 	board.carPos = new_pos
