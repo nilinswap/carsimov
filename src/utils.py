@@ -24,7 +24,13 @@ class Cord:
 	def __add__(self, other):
 		return Cord(x = self.x + other.x, y = self.y + other.y)
 		
-	def valid(self, board):
+	def car_valid(self, board):
+		
+		for block in board.map:
+			if block.encloses(self):
+				return False
+		
+		return True
 	
 class Block:
 	"""
@@ -42,6 +48,12 @@ class Block:
 	
 	def __str__(self):
 		return "\n\tlt: %s\n\t\trb: %s\n" % (self.lt, self.rb)
+	
+	def encloses(self, cord):
+		
+		# if self.lt <= cord <= self.rb
+		return self.lt.x <= cord.x and self.lt.y <= cord.y and cord.x <= self.rb.x and cord.y <= self.rb.y
+		
 
 class Map:
 	"""
@@ -160,7 +172,7 @@ def get_next_random_pos(board):
 	new_pos = curr_pos
 	for dir in lis_dir:
 		new_pos = curr_pos + dir
-		if new_pos.valid(board):
+		if new_pos.car_valid(board):
 			break
 			
 	board.carPos = new_pos

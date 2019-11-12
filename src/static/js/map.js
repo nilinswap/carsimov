@@ -57,7 +57,7 @@ $(function() {
         success: function(data) {
             pos_result = JSON.parse(data)
             //console.log("map", map )
-            car_pos = pos_result;
+            car_pos = Cord(pos_result.x, pos_result.y);
 
 
 
