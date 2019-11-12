@@ -56,12 +56,12 @@ $(function() {
         url: '/api/pos',
         success: function(data) {
             pos_result = JSON.parse(data)
-            //console.log("map", map )
-            car_pos = Cord(pos_result.x, pos_result.y);
+            console.log("pos_result", pos_result )
+            car_pos = new Cord(pos_result.x, pos_result.y);
+            console.log("car_pos", car_pos)
 
 
-
-            console.log("map 3", map )
+            //console.log("map 3", map )
             //$('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
         }
     });
@@ -116,7 +116,17 @@ const drawCells = () => {
         }
 	}
 
-	//draw car
+	drawCar()
+
+
+	ctx.stroke();
+};
+
+const drawCar = () => {
+
+
+	ctx.beginPath();
+
 	ctx.fillStyle = CAR_COLOR;
 	ctx.fillRect(
                     car_pos.x * (CELL_SIZE + 1) + 1,
@@ -128,9 +138,10 @@ const drawCells = () => {
 
 	ctx.stroke();
 };
+
 setTimeout(
 drawCells
- , 3000);
+ , 1000);
 
 
 

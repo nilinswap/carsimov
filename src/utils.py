@@ -26,7 +26,7 @@ class Cord:
 		
 	def car_valid(self, board):
 		
-		for block in board.map:
+		for block in board.map.block_list:
 			if block.encloses(self):
 				return False
 		
@@ -168,7 +168,7 @@ def get_next_random_pos(board):
 	
 	curr_pos = board.carPos
 	
-	lis_dir = [Cord(1, 1), Cord(1, -1), Cord(-1, 1), Cord(-1, -1)]
+	lis_dir = [Cord(0, 1), Cord(0, -1), Cord(-1, 0), Cord(1, 0)]
 	new_pos = curr_pos
 	for dir in lis_dir:
 		new_pos = curr_pos + dir
