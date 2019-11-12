@@ -41,13 +41,33 @@ $(function() {
                 block = new Block(lt, rb);
                 map.push(block)
             }
-            car_pos = new Cord(map_result.car_pos.x, map_result.car_pos.y);;
+
+
             console.log("map 3", map )
             //$('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
         }
     });
 
 })
+
+let pos_result = null;
+$(function() {
+    $.ajax({
+        url: '/api/pos',
+        success: function(data) {
+            pos_result = JSON.parse(data)
+            //console.log("map", map )
+            car_pos = pos_result;
+
+
+
+            console.log("map 3", map )
+            //$('#from_python').html("hi " + data['name'] + ", this is Javeh. (sent by python)");
+        }
+    });
+
+})
+
 
 console.log("map", map)
 
@@ -99,8 +119,8 @@ const drawCells = () => {
 	//draw car
 	ctx.fillStyle = CAR_COLOR;
 	ctx.fillRect(
-                    col * (CELL_SIZE + 1) + 1,
-                    row * (CELL_SIZE + 1) + 1,
+                    car_pos.x * (CELL_SIZE + 1) + 1,
+                    car_pos.y * (CELL_SIZE + 1) + 1,
                     CELL_SIZE,
                     CELL_SIZE
                 );

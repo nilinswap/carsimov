@@ -20,9 +20,11 @@ class Cord:
 	
 	def __str__(self):
 		return "\n\t\tx: %d\n\t\ty: %d\n"%(self.x, self.y)
-		
-		
 	
+	def __add__(self, other):
+		return Cord(x = self.x + other.x, y = self.y + other.y)
+		
+	def valid(self, board):
 	
 class Block:
 	"""
@@ -68,7 +70,15 @@ class Map:
 	def blind_pick(self):
 		current_choice = random.choice(self.block_list)
 		return current_choice
-	
+
+class Board:
+	"""
+	:param map:
+	:param carPos:
+	"""
+	def __init__(self, map: Map = Map(), carPos = Cord(0, 0)):
+		self.map = map
+		self.carPos = carPos
 	
 def get_random_map(map: Map ,width: int, length: int, level: int) -> Map:
 	"""
@@ -135,12 +145,30 @@ def get_random_map(map: Map ,width: int, length: int, level: int) -> Map:
 	
 	map = get_random_map(map = map, length = length, width = width, level= level-1)
 	
-	
-	
-	
-	
 	return map
 
+def get_next_random_pos(board):
+	"""
+	
+	:param board:
+	:return:
+	"""
+	
+	curr_pos = board.carPos
+	
+	lis_dir = [Cord(1, 1), Cord(1, -1), Cord(-1, 1), Cord(-1, -1)]
+	new_pos = curr_pos
+	for dir in lis_dir:
+		new_pos = curr_pos + dir
+		if new_pos.valid(board):
+			break
+			
+	board.carPos = new_pos
+	
+	return new_pos
+	
+	
+	
 def test():
 	map = get_random_map(
 		map = Map(),

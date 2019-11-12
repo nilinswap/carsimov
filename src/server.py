@@ -25,7 +25,8 @@ def random_map():
 			width = width,
 			level = 10
 		)
-
+	global board
+	board = utils.Board(map = map)
 	map_info = json.dumps( map, default= lambda o: o.__dict__, indent=4)
 	
 	return map_info
@@ -49,6 +50,12 @@ def recieve_hi():
 	}
 	return jsonify(message)
 
+
+@app.route("/api/pos")
+def pos_info():
+	pos = utils.get_next_random_pos(board = board)
+	pos_info = json.dumps(pos, default=lambda o: o.__dict__, indent=4)
+	return pos_info
 
 if __name__ == "__main__":
 	app.run()
